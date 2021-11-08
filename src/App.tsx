@@ -62,7 +62,7 @@ export interface HealthCheck {
     error: string;
   };
 }
-const devLocation = process.env.NODE_ENV === 'development' || window.location.origin === 'http://178.154.202.217';
+const devLocation = process.env.NODE_ENV === 'development' || window.location.origin === 'http://51.250.7.175';
 
 export const apiUrl = devLocation ? process.env.REACT_APP_API_DEV_ADDRESS : process.env.REACT_APP_API_ADDRESS;
 
