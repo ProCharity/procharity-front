@@ -10,4 +10,6 @@ RUN yarn build
 FROM nginx:stable-alpine
 COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /frontend/build /usr/share/nginx/html
+COPY --from=build /frontend/public/robots.txt /usr/share/nginx/html
+
 CMD ["nginx", "-g", "daemon off;"]
