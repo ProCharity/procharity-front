@@ -284,7 +284,7 @@ const Dashboard: React.FC<DashboardProps> = ({  isMenuOpen }) => {
                         </Typography>
                         <LocalizationProvider dateAdapter={AdapterDateFns} locale={ru}>
                           <DesktopDatePicker
-                            minDate={new Date(2021, 7, 1)}
+                            minDate={new Date(2021, 8, 1)}
                             disableFuture
                             openTo="day"
                             orientation="portrait"
@@ -308,7 +308,7 @@ const Dashboard: React.FC<DashboardProps> = ({  isMenuOpen }) => {
                           />
                         </LocalizationProvider>
                         <span className={errorDate ? classes.errorDate : classes.errorDateHidden}>
-                          Введите дату до 01.08.2021
+                          Введите дату до 01.09.2021
                         </span>
                       </div>
                       <Button className={classes.button} type="submit">
@@ -344,7 +344,7 @@ const Dashboard: React.FC<DashboardProps> = ({  isMenuOpen }) => {
                         </Typography>
                         <LocalizationProvider dateAdapter={AdapterDateFns} locale={ru}>
                           <DesktopDatePicker
-                            minDate={new Date(2021, 7, 1)}
+                            minDate={new Date(2021, 8, 1)}
                             disableFuture
                             openTo="day"
                             orientation="portrait"
@@ -368,7 +368,7 @@ const Dashboard: React.FC<DashboardProps> = ({  isMenuOpen }) => {
                           />
                         </LocalizationProvider>
                         <span className={errorDate ? classes.errorDate : classes.errorDateHidden}>
-                          Введите дату до 01.08.2021
+                          Введите дату до 01.09.2021
                         </span>
                       </div>
                       <Button className={classes.button} type="submit">
