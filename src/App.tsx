@@ -62,7 +62,7 @@ export interface HealthCheck {
     error: string;
   };
 }
-export const apiUrl = process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL : `${window.location.origin}/api/v1`;
+export const apiUrl = `${process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL : window.location.origin}/api/v1`;
 
 function App() {
    const [userToken, setUserToken] = useLocalStorage<string | boolean>('user', false);
