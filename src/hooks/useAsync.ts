@@ -5,6 +5,7 @@
 // @ts-nocheck
 import * as React from 'react';
 
+// updates the state strictly after the component has rendered
 function useSafeDispatch(dispatch) {
   const mounted = React.useRef(false);
   React.useLayoutEffect(() => {
