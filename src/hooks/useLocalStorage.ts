@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 function useLocalStorage<T>(key: string, initialValue: T) {
   // State to store our value
