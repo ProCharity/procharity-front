@@ -109,7 +109,7 @@ export interface Result {
   date_registration: string;
 }
 
-interface DashboardProps {
+interface IDashboardProps {
 
   isMenuOpen: boolean;
 }
@@ -117,7 +117,7 @@ export interface DashboardDateValues {
   date: string;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({  isMenuOpen }) => {
+const Dashboard: React.FC<IDashboardProps> = ({  isMenuOpen }) => {
   const mainClasses = useMainStyles();
   const history = useHistory();
     const classes = useStyles();
