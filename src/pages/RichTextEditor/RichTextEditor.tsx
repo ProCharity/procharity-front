@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Button, CircularProgress, FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import clsx from 'clsx';
-import ReactQuill from 'react-quill';
+import ReactQuill, { Quill }  from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import useMainStyles from '../../App.styles'
 import useStyles from './RichTextEditor.style';
@@ -19,8 +19,15 @@ export interface RichTextEditorFormValues {
   has_mailing: string;
 }
 
+const Inline = Quill.import('blots/inline');
+class ColorGreyBlot extends Inline {}
+ColorGreyBlot.blotName = 'tg-spoiler';
+ColorGreyBlot.tagName = 'span';
+Quill.register('tg-spoiler', ColorGreyBlot);
+
+
 const modules = {
-  toolbar: [['bold', 'italic', 'underline', 'strike'], ['link']],
+  toolbar: [['bold', 'italic', 'underline', 'strike'], ['link'], ['tg-spoiler']],
   clipboard: {
     matchVisual: false,
   },
