@@ -71,8 +71,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     '& .ql-editor': {
       minHeight: 150,
     },
-    '& .tg-spoiler': {
-      color: 'grey',
+    '& .ql-spoiler': {
+      color: theme.palette.mode === 'dark' ? 'white' : 'black',
     },
   },
 }));
