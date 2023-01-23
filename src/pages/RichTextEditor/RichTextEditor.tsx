@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Button, CircularProgress, FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import clsx from 'clsx';
-import ReactQuill from 'react-quill';
+import ReactQuill, { Quill }  from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import useMainStyles from '../../App.styles'
 import useStyles from './RichTextEditor.style';
@@ -14,13 +14,64 @@ import { apiUrl, AuthContext } from '../../App';
 
 
 
+
 export interface RichTextEditorFormValues {
   message: string;
   has_mailing: string;
 }
 
+
+
+const BlockEmbed = Quill.import('blots/block/embed');
+class SpoilerBlot extends BlockEmbed {
+  static create(value:string){
+    const node = super.create();
+    node.setAttribute('style','background-color: #FF8630');
+    node.textContent = value;
+    return node;
+  }
+
+  static formats(domNode:any) {
+    return domNode.getAttribute('span');
+  }
+}
+
+
+
+SpoilerBlot.blotName = 'spoiler';
+SpoilerBlot.tagName = 'span';
+SpoilerBlot.className = 'tg-spoiler';
+Quill.register('formats/spoiler', SpoilerBlot);
+
+const CustomButtonSpoiler = () => <span>Спойлер</span>;
+
+
+const CustomToolbar = () => (
+  <div id="toolbar">
+    <button className="ql-bold" type="button"> </button>
+    <button className="ql-italic" type="button"> </button>
+    <button className="ql-underline" type="button"> </button>
+    <button className="ql-strike" type="button"> </button>
+    <button className="ql-link" type="button"> </button>
+    <button className="ql-spoiler" type="button">
+      <CustomButtonSpoiler />
+    </button>
+  </div>
+);
+
+const formats = [
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "link",
+  "spoiler"
+];
+
 const modules = {
-  toolbar: [['bold', 'italic', 'underline', 'strike'], ['link']],
+  toolbar: {
+    container: '#toolbar',
+ },
   clipboard: {
     matchVisual: false,
   },
@@ -34,9 +85,9 @@ interface RichTextEditorInterface {
 const RichTextEditor: React.FC<RichTextEditorInterface> = ({ isMenuOpen }) => {
   const classes = useStyles();
   const mainClasses = useMainStyles();
-    const history = useHistory();
-  const {userToken, refreshToken, setUserToken, setRefreshToken} = useContext(AuthContext)
- const onSubmitMessage = async (data: RichTextEditorFormValues) => {
+  const history = useHistory();
+   const {userToken, refreshToken, setUserToken, setRefreshToken} = useContext(AuthContext)
+   const onSubmitMessage = async (data: RichTextEditorFormValues) => {
    const stripTags = data.message.replace(/(<p[^>]+?>|<p>)/gim, '');
    const replaceEnclosedTag = stripTags.replace(/(<br[^>]+?>|<br>|<\/p>)/gim, '\n');
    const normalizedData = { message: replaceEnclosedTag };
@@ -141,7 +192,10 @@ const RichTextEditor: React.FC<RichTextEditorInterface> = ({ isMenuOpen }) => {
         control={control}
         defaultValue=""
         render={({ field }) => (
-          <ReactQuill preserveWhitespace className={classes.quill} modules={modules} theme="snow" {...field} />
+          <div className={classes.quill}>
+            <CustomToolbar />
+            <ReactQuill preserveWhitespace className={classes.quill} modules={modules} formats={formats} theme="snow" {...field} />
+        </div>
         )}
       />
       {isLoading ? (
