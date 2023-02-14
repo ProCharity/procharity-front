@@ -14,7 +14,7 @@ import { apiUrl, AuthContext } from '../../App';
 
 
 
-export interface RichTextEditorFormValues {
+export interface IRichTextEditorFormValues {
   message: string;
   has_mailing: string;
 }
@@ -26,17 +26,16 @@ const modules = {
   },
 };
 
-interface RichTextEditorInterface {
-
+interface IRichTextEditorInterface {
   isMenuOpen: boolean
 }
 
-const RichTextEditor: React.FC<RichTextEditorInterface> = ({ isMenuOpen }) => {
+const RichTextEditor: React.FC<IRichTextEditorInterface> = ({ isMenuOpen }) => {
   const classes = useStyles();
   const mainClasses = useMainStyles();
     const history = useHistory();
   const {userToken, refreshToken, setUserToken, setRefreshToken} = useContext(AuthContext)
- const onSubmitMessage = async (data: RichTextEditorFormValues) => {
+ const onSubmitMessage = async (data: IRichTextEditorFormValues) => {
    const stripTags = data.message.replace(/(<p[^>]+?>|<p>)/gim, '');
    const replaceEnclosedTag = stripTags.replace(/(<br[^>]+?>|<br>|<\/p>)/gim, '\n');
    const normalizedData = { message: replaceEnclosedTag };
@@ -89,7 +88,7 @@ const RichTextEditor: React.FC<RichTextEditorInterface> = ({ isMenuOpen }) => {
      return Promise.reject(e.message);
    }
  };
-  const { handleSubmit, control, reset } = useForm<RichTextEditorFormValues>();
+  const { handleSubmit, control, reset } = useForm<IRichTextEditorFormValues>();
   const { data, error, run, isError, setError, setData, isLoading } = useAsync({
     data: null,
     error: null,
