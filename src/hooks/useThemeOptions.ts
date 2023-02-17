@@ -130,25 +130,6 @@ const useThemeOptions = (themeColor: boolean) => {
       ),
     [theme.palette, themeColor],
   );
-}; /* () => {
-   
-    const [themeColor, setThemeColor] = useLocalStorage<boolean>('theme', true);
-     const handleSetTheme = () => {
-       setThemeColor(!themeColor);
-     };
-
-     useEffect(() => {
-       const handleSetThemeLocal = () => {
-         setThemeColor(themeColor);
-       };
-       if (localStorage.getItem('theme') === null) {
-         handleSetThemeLocal();
-       }
-     }, [setThemeColor, themeColor]);
-
-     return {
-         themeColor,
-         handleSetTheme,
-     } */
+};
 
 export default useThemeOptions;
