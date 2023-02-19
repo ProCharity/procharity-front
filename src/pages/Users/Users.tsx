@@ -7,7 +7,7 @@ import TablePagination from '@mui/material/TablePagination';
 import Typography from '@mui/material/Typography';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
-import { UsersTableData } from '../Dashboard/Dashboard';
+import { IUsersTableData } from '../Dashboard/Dashboard';
 import Preloader from '../../components/Preloader/Preloader';
 import StatusLabel from '../../components/StatusLabel/StatusLabel';
 import { useAsync } from '../../hooks/useAsync';
@@ -16,9 +16,8 @@ import useStyles from './Users.styles';
 import useMainStyles from '../../App.styles';
 import { apiUrl, AuthContext } from '../../App';
 
-
-interface UsersProps {
-  isMenuOpen: boolean
+interface IUsersProps {
+  isMenuOpen: boolean;
 }
 
 export const formatData = (date: string) => {
@@ -29,12 +28,11 @@ export const formatData = (date: string) => {
 };
 const columns = ['ФИО', 'E-mail', 'Рассылка', 'Бот заблокирован', 'Имя пользователя', 'Дата Регистрации'];
 
-const Users: React.FC<UsersProps> = ({isMenuOpen }) => {
+const Users: React.FC<IUsersProps> = ({ isMenuOpen }) => {
   const history = useHistory();
-  const { userToken,refreshToken,setUserToken, setRefreshToken } = useContext(AuthContext);
+  const { userToken, refreshToken, setUserToken, setRefreshToken } = useContext(AuthContext);
   const getUsersData = async (page: number, limit: number) => {
     try {
-
       const response = await ky(`${apiUrl}/users/?page=${page}&limit=${limit}`, {
         retry: {
           limit: 2,
@@ -87,7 +85,7 @@ const Users: React.FC<UsersProps> = ({isMenuOpen }) => {
       });
 
       if (response.status === 200) {
-        const userData = (await response.json()) as UsersTableData;
+        const userData = (await response.json()) as IUsersTableData;
         return userData;
       }
       const error = await response.json();
@@ -99,11 +97,11 @@ const Users: React.FC<UsersProps> = ({isMenuOpen }) => {
   };
 
   const classes = useStyles();
-    const mainClasses = useMainStyles();
+  const mainClasses = useMainStyles();
   const { data, error, isLoading, run, isError, reset } = useAsync({ status: 'idle', data: null, error: null });
   const [rowsPerPage, setRowsPerPage] = useLocalStorage<number>('rowsPerPage', 20);
   const [page, setPage] = useLocalStorage<number>('page', 1);
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (_event: unknown, newPage: number) => {
     run(getUsersData(newPage + 1, rowsPerPage));
     setPage(newPage + 1);
   };

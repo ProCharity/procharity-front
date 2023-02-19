@@ -31,7 +31,7 @@ import useStyles from './Header.styles';
 
 
 
-interface HeaderProps {
+interface IHeaderProps {
   handleDrawerOpen: () => void;
   handleDrawerClose: () => void;
   handleSetTheme: () => void;
@@ -40,7 +40,7 @@ interface HeaderProps {
   handleCloseError: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({
+const Header: React.FC<IHeaderProps> = ({
   handleDrawerOpen,
   handleDrawerClose,
   isMenuOpen,

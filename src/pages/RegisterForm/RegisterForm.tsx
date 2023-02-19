@@ -30,7 +30,7 @@ const paramsSchema = yup.object().shape({
   id: yup.string().uuid(),
 });
 
-export interface RegisterFormValues extends Options {
+export interface IRegisterFormValues extends Options {
   first_name: string;
   last_name: string;
   password: string;
@@ -41,7 +41,7 @@ const RegisterForm: React.FC = () => {
   const history = useHistory();
   const password = useRef({});
 
-  const onRegister = async (data: RegisterFormValues, params: { id: string }) => {
+  const onRegister = async (data: IRegisterFormValues, params: { id: string }) => {
     try {
       const dataForRegistration = data;
       delete dataForRegistration?.passwordConfirmation;
@@ -96,7 +96,7 @@ const RegisterForm: React.FC = () => {
     control,
     watch,
     formState: { errors },
-  } = useForm<Pick<RegisterFormValues, 'first_name' | 'password' | 'last_name' | 'passwordConfirmation'>>({
+  } = useForm<Pick<IRegisterFormValues, 'first_name' | 'password' | 'last_name' | 'passwordConfirmation'>>({
     resolver: yupResolver(schema),
     mode: 'onTouched',
   });
@@ -112,7 +112,7 @@ const RegisterForm: React.FC = () => {
     }
     setData(null);
   };
-  const submitRegisterForm = (data: RegisterFormValues) => {
+  const submitRegisterForm = (data: IRegisterFormValues) => {
     run(onRegister(data, params));
   };
   const [isPasswordVisible, setPasswordVisible] = useState(false);
