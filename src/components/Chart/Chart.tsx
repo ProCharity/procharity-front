@@ -5,14 +5,14 @@ import { Button } from '@mui/material';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useTheme } from '@mui/material/styles';
 import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer, CartesianGrid, Tooltip } from 'recharts';
-import { UserData } from '../../pages/Dashboard/Dashboard';
+import { IUserData } from '../../pages/Dashboard/Dashboard';
 import useWindowSize, { Size } from '../../hooks/useWindowSize';
 
-interface ChartProps {
-  data: UserData | null;
+interface IChartProps {
+  data: IUserData | null;
   title: string;
 }
-interface ChartData {
+interface IChartData {
   time: number;
   amountAdded?: number;
   amountUnsubscribed?: number;
@@ -22,12 +22,12 @@ interface ChartData {
   activeUnsubscribed?: number;
 }
 
-export default function Chart({ data, title }: ChartProps) {
+export default function Chart({ data, title }: IChartProps) {
   const size: Size = useWindowSize();
   const { width } = size;
 
   const theme = useTheme();
-  const chartData: ChartData[] = Object.keys(data?.all_users_statistic.added_external_users ?? {}).reduce(
+  const chartData: IChartData[] = Object.keys(data?.all_users_statistic.added_external_users ?? {}).reduce(
     (previousValue, currentValue) => {
       const amountAdded = data?.all_users_statistic.added_users[currentValue] ?? 0;
       const day = Date.parse(currentValue);
@@ -50,7 +50,7 @@ export default function Chart({ data, title }: ChartProps) {
       previousValue.push(newObject);
       return previousValue;
     },
-    [] as ChartData[],
+    [] as IChartData[],
   );
 
   const label = (value: any, name: any, props: any) => {

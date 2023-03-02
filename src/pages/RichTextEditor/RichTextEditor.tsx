@@ -66,11 +66,12 @@ const modules = {
   },
 };
 
-interface RichTextEditorInterface {
-  isMenuOpen: boolean;
+
+interface IRichTextEditorInterface {
+  isMenuOpen: boolean
 }
 
-const RichTextEditor: React.FC<RichTextEditorInterface> = ({ isMenuOpen }) => {
+const RichTextEditor: React.FC<IRichTextEditorInterface> = ({ isMenuOpen }) => {
   const classes = useStyles();
   const mainClasses = useMainStyles();
   const history = useHistory();
@@ -129,6 +130,7 @@ const RichTextEditor: React.FC<RichTextEditorInterface> = ({ isMenuOpen }) => {
     }
   };
   const { handleSubmit, control, reset } = useForm<RichTextEditorFormValues>();
+
   const { data, error, run, isError, setError, setData, isLoading } = useAsync({
     data: null,
     error: null,

@@ -5,14 +5,14 @@ import clsx from 'clsx';
 import { useRouteMatch } from 'react-router-dom';
 import useStyles from './StatusLabel.style';
 
-interface StatusLabelProps {
+interface IStatusLabelProps {
   isStatusLabelOpen: boolean;
   isError: boolean;
   handleCloseError: () => void;
   statusMessage: null | string;
 }
 
-const StatusLabel: React.FC<StatusLabelProps> = ({ isStatusLabelOpen, handleCloseError, isError, statusMessage }) => {
+const StatusLabel: React.FC<IStatusLabelProps> = ({ isStatusLabelOpen, handleCloseError, isError, statusMessage }) => {
   const classes = useStyles();
   const matchLogin = useRouteMatch('/')?.isExact ?? false;
 

@@ -26,7 +26,7 @@ const paramsSchema = yup.object().shape({
   id: yup.string().uuid(),
 });
 
-export interface ResetFormValues extends Options {
+export interface IResetFormValues extends Options {
   password: string;
   passwordConfirmation?: string;
 }
@@ -34,7 +34,7 @@ export interface ResetFormValues extends Options {
 const ResetForm: React.FC = () => {
   const history = useHistory();
   const password = useRef({});
-  const onReset = async (data: ResetFormValues, params: { id: string }) => {
+  const onReset = async (data: IResetFormValues, params: { id: string }) => {
     try {
       const response = await ky.post(`${apiUrl}/auth/password_reset_confirm/`, {
         json: {
@@ -86,7 +86,7 @@ const ResetForm: React.FC = () => {
     control,
     watch,
     formState: { errors },
-  } = useForm<Pick<ResetFormValues, 'password' | 'passwordConfirmation'>>({
+  } = useForm<Pick<IResetFormValues, 'password' | 'passwordConfirmation'>>({
     resolver: yupResolver(schema),
     mode: 'onTouched',
   });
@@ -102,7 +102,7 @@ const ResetForm: React.FC = () => {
     }
     setData(null);
   };
-  const submitResetForm = (data: ResetFormValues) => {
+  const submitResetForm = (data: IResetFormValues) => {
     const newData = data
     delete newData?.passwordConfirmation;
     run(onReset(newData, params));

@@ -32,7 +32,7 @@ const schema = yup.object().shape({
   date: yup.string().min(10, 'Введите дату в формате ДД-ММ-ГГГГ').required('Поле e-mail необходимо к заполнению'),
 });
 
-export interface userStats {
+export interface IuserStats {
   time: string;
   amount: number;
 }
@@ -45,7 +45,7 @@ function declOfNum(n: number, titles: any) {
 }
 
 
-export interface UserData {
+export interface IUserData {
   active_users: number;
   number_users: {
     all_users: number;
@@ -87,7 +87,7 @@ export interface UserData {
   };
 }
 
-export interface UsersTableData {
+export interface IUsersTableData {
   total: number;
   pages: number;
   previous_page: null;
@@ -95,10 +95,10 @@ export interface UsersTableData {
   next_page: number;
   next_url: string;
   previous_url: null;
-  result: Result[];
+  result: IResult[];
 }
 
-export interface Result {
+export interface IResult {
   telegram_id: number;
   username: string;
   email: null;
@@ -109,15 +109,15 @@ export interface Result {
   date_registration: string;
 }
 
-interface DashboardProps {
+interface IDashboardProps {
 
   isMenuOpen: boolean;
 }
-export interface DashboardDateValues {
+export interface IDashboardDateValues {
   date: string;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({  isMenuOpen }) => {
+const Dashboard: React.FC<IDashboardProps> = ({  isMenuOpen }) => {
   const mainClasses = useMainStyles();
   const history = useHistory();
     const classes = useStyles();
@@ -180,7 +180,7 @@ const Dashboard: React.FC<DashboardProps> = ({  isMenuOpen }) => {
         });
 
         if (response.status === 200) {
-          const userData: UserData = (await response.json()) as UserData;
+          const userData: IUserData = (await response.json()) as IUserData;
 
           return userData;
         }
@@ -192,7 +192,7 @@ const Dashboard: React.FC<DashboardProps> = ({  isMenuOpen }) => {
       }
     };
   const [errorDate, setErrorDate] = useState(false);
-  const { handleSubmit, setValue } = useForm<DashboardDateValues>({ resolver: yupResolver(schema), mode: 'onTouched' });
+  const { handleSubmit, setValue } = useForm<IDashboardDateValues>({ resolver: yupResolver(schema), mode: 'onTouched' });
   const { data, error, run, isError, reset, isLoading } = useAsync({ status: 'idle', data: null, error: null });
 
   const [value, setDateValue] = React.useState<Date | null>(new Date());

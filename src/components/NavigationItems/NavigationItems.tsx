@@ -12,11 +12,11 @@ import GroupIcon from '@mui/icons-material/Group';
 import Divider from '@mui/material/Divider';
 import useStyles from './NavigationItems.styles';
 
-interface MainListItemsProps {
+interface IMainListItemsProps {
   handleCloseError: () => void;
 }
 
-export const MainListItems: React.FC<MainListItemsProps> = ({ handleCloseError }) => {
+export const MainListItems: React.FC<IMainListItemsProps> = ({ handleCloseError }) => {
   const history = useHistory();
   const classes = useStyles();
   return (
@@ -71,11 +71,11 @@ export const MainListItems: React.FC<MainListItemsProps> = ({ handleCloseError }
   );
 };
 
-interface SecondaryListItemsProps {
+interface ISecondaryListItemsProps {
   handleLogout: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export const SecondaryListItems: React.FC<SecondaryListItemsProps> = ({ handleLogout }) => (
+export const SecondaryListItems: React.FC<ISecondaryListItemsProps> = ({ handleLogout }) => (
   <div>
     <ListItem onClick={handleLogout} component="button" button>
       <ListItemIcon>

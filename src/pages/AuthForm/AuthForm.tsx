@@ -17,7 +17,7 @@ const schema = yup.object().shape({
   password: yup.string().required('Поле пароль необходимо к заполнению').min(8, 'Минимальная длина пароля 8 символов'),
 });
 
-export interface LoginFormValues {
+export interface ILoginFormValues {
   email: string;
   password: string;
 }
@@ -29,8 +29,8 @@ const history = useHistory()
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<Pick<LoginFormValues, 'email' | 'password'>>({ resolver: yupResolver(schema), mode: 'onTouched' });
-  const onLogin = async (data: LoginFormValues) => {
+  } = useForm<Pick<ILoginFormValues, 'email' | 'password'>>({ resolver: yupResolver(schema), mode: 'onTouched' });
+  const onLogin = async (data: ILoginFormValues) => {
     try {
       const response = await ky.post(`${apiUrl}/auth/login/`, {
         json: {
@@ -71,7 +71,7 @@ const history = useHistory()
     setPasswordVisible(!isPasswordVisible);
   };
 
-  const onSubmit = async (userData: LoginFormValues) => {
+  const onSubmit = async (userData: ILoginFormValues) => {
     run(onLogin(userData));
   };
 
