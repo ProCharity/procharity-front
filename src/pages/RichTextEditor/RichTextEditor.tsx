@@ -161,6 +161,7 @@ const RichTextEditor: React.FC<IRichTextEditorInterface> = ({ isMenuOpen }) => {
                 setError('Something went wrong');
               } else {
                 reset({ message: '' });
+                setEmpty(true);
               }
             })
             .catch((err: any) => {
