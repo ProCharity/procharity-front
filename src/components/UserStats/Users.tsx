@@ -5,12 +5,12 @@ import Typography from '@mui/material/Typography';
 import useStyles from './Users.styles';
 
 
-interface UsersProps {
+interface IUsersProps {
   text: number;
   title: string;
   lastUpdate?:string;
 }
-const Users: React.FC<UsersProps> = ({ text, title, lastUpdate = '' }) => {
+const Users: React.FC<IUsersProps> = ({ text, title, lastUpdate = '' }) => {
   const classes = useStyles();
 
   return (

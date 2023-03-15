@@ -15,7 +15,7 @@ import useMainStyles from '../../App.styles';
 import { apiUrl, AuthContext } from '../../App';
 
 
-interface InviteProps {
+interface IInviteProps {
   children?: React.ReactNode;
   isMenuOpen: boolean
 }
@@ -28,7 +28,7 @@ export interface InviteFormValues extends Options {
   email: string;
 }
 
-const Invite: React.FC<InviteProps> = ({  isMenuOpen }) => {
+const Invite: React.FC<IInviteProps> = ({  isMenuOpen }) => {
   const classes = useStyles();
     const mainClasses = useMainStyles();
   const { data, error, run, isError, setData, isLoading, setError } = useAsync({

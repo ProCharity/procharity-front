@@ -4,9 +4,7 @@
 module.exports = {
   babel: {
     loaderOptions: (babelLoaderOptions) => {
-      const origBabelPresetCRAIndex = babelLoaderOptions.presets.findIndex((preset) => {
-        return preset[0].includes('babel-preset-react-app');
-      });
+      const origBabelPresetCRAIndex = babelLoaderOptions.presets.findIndex((preset) => preset[0].includes('babel-preset-react-app'));
 
       const origBabelPresetCRA = babelLoaderOptions.presets[origBabelPresetCRAIndex];
 

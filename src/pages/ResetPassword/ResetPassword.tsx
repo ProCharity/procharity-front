@@ -11,7 +11,7 @@ import StatusLabel from '../../components/StatusLabel/StatusLabel';
 import { useAsync } from '../../hooks/useAsync';
 import { apiUrl } from '../../App';
 
-interface ResetPasswordProps {
+interface IResetPasswordProps {
   children?: React.ReactNode;
 }
 
@@ -19,17 +19,17 @@ const schema = yup.object().shape({
   email: yup.string().email('Такой e-mail не подойдет').required('Поле e-mail необходимо к заполнению'),
 });
 
-export interface ResetPasswordFormValues extends Options {
+export interface IResetPasswordFormValues extends Options {
   email: string;
 }
-const ResetPassword: React.FC<ResetPasswordProps> = () => {
+const ResetPassword: React.FC<IResetPasswordProps> = () => {
   const classes = useStyles();
   const { error, run, isError, setError, setData, isLoading, data } = useAsync({
     data: null,
     error: null,
   });
 
-  const onResetPassword = async (dataReset: ResetPasswordFormValues) => {
+  const onResetPassword = async (dataReset: IResetPasswordFormValues) => {
     try {
       const response = await ky.post(`${apiUrl}/auth/password_reset/`, {
         json: {
@@ -61,8 +61,8 @@ const ResetPassword: React.FC<ResetPasswordProps> = () => {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<Pick<ResetPasswordFormValues, 'email'>>({ resolver: yupResolver(schema), mode: 'onTouched' });
-  const submitData = async (userData: ResetPasswordFormValues) => {
+  } = useForm<Pick<IResetPasswordFormValues, 'email'>>({ resolver: yupResolver(schema), mode: 'onTouched' });
+  const submitData = async (userData: IResetPasswordFormValues) => {
     run(onResetPassword(userData));
   };
   return (

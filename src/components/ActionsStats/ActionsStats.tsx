@@ -8,12 +8,12 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import useStyles from './Actions.styles';
 
-interface ActionsProps {
+interface IActionsProps {
   actionsStats: { [key: string]: number } | undefined;
   title: string;
   cardTitle: string;
 }
-const Actions: React.FC<ActionsProps> = ({ actionsStats, title, cardTitle }) => {
+const Actions: React.FC<IActionsProps> = ({ actionsStats, title, cardTitle }) => {
   const classes = useStyles();
   const stats = actionsStats ?? { command_stats: 0 };
   return (
