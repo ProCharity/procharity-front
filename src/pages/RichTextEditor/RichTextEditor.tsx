@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import ky from 'ky';
 import { useHistory } from 'react-router-dom';
 import { Button, CircularProgress, FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
@@ -24,7 +24,7 @@ const CodeBlock = Quill.import('formats/strike');
 class StyledCodeBlock extends CodeBlock {
   static create(value: string) {
     const node = super.create();
-    node.setAttribute('style', 'background-color: #23241f');
+    node.setAttribute('style', 'background-color: #c1c1c1');
     return node;
   }
 }
@@ -74,6 +74,7 @@ const RichTextEditor: React.FC<RichTextEditorInterface> = ({ isMenuOpen }) => {
   const classes = useStyles();
   const mainClasses = useMainStyles();
   const history = useHistory();
+  const [empty, setEmpty] = useState(true);
   const { userToken, refreshToken, setUserToken, setRefreshToken } = useContext(AuthContext);
   const onSubmitMessage = async (data: RichTextEditorFormValues) => {
     const stripTags = data.message.replace(/(<p[^>]+?>|<p>)/gim, '');
@@ -119,11 +120,9 @@ const RichTextEditor: React.FC<RichTextEditorInterface> = ({ isMenuOpen }) => {
         },
       });
       if (response.status === 200) {
-        const result = await response.json();
-        return result;
+        return await response.json();
       }
-      const error = await response.json();
-      throw new Error(error.message);
+      return Promise.reject(new Error(`Server responded with status ${response.status}`));
     } catch (e: any) {
       return Promise.reject(e.message);
     }
@@ -144,6 +143,7 @@ const RichTextEditor: React.FC<RichTextEditorInterface> = ({ isMenuOpen }) => {
     }
     setData(null);
   };
+
   return (
     <main
       className={clsx(mainClasses.content, {
@@ -152,8 +152,18 @@ const RichTextEditor: React.FC<RichTextEditorInterface> = ({ isMenuOpen }) => {
       <form
         className={classes.form}
         onSubmit={handleSubmit((dataS, e) => {
-          run(onSubmitMessage(dataS));
-          reset({ message: '' });
+          const text = { message: dataS.message.replace(/<\/?p>|<br>/g, ''), has_mailing: dataS.has_mailing };
+          run(onSubmitMessage(text))
+            .then((res: any) => {
+              if (res === undefined) {
+                setError('Something went wrong');
+              } else {
+                reset({ message: '' });
+              }
+            })
+            .catch((err: any) => {
+              setError(err.message);
+            });
         })}>
         <Typography variant="h5">Отправить сообщение пользователям</Typography>
         <StatusLabel
@@ -175,6 +185,7 @@ const RichTextEditor: React.FC<RichTextEditorInterface> = ({ isMenuOpen }) => {
           name="has_mailing"
           control={control}
         />
+
         <Controller
           name="message"
           control={control}
@@ -189,14 +200,18 @@ const RichTextEditor: React.FC<RichTextEditorInterface> = ({ isMenuOpen }) => {
                 formats={formats}
                 theme="snow"
                 {...field}
+                onKeyDown={() => {
+                  setEmpty(false);
+                }}
               />
             </div>
           )}
         />
+
         {isLoading ? (
           <CircularProgress />
         ) : (
-          <Button className={classes.authFormButton} type="submit">
+          <Button className={classes.authFormButton} type="submit" disabled={empty}>
             отправить
           </Button>
         )}
