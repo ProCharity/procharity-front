@@ -184,9 +184,7 @@ const Dashboard: React.FC<IDashboardProps> = ({  isMenuOpen }) => {
 
           return userData;
         }
-        const error = await response.json();
-
-        throw new Error(error.message);
+        return Promise.reject(new Error(`Server responded with status ${response.status}`));
       } catch (e: any) {
         return Promise.reject(e.message);
       }

@@ -42,8 +42,7 @@ const ResetPassword: React.FC<IResetPasswordProps> = () => {
         const result = await response.json();
         return result;
       }
-      const errorReset = await response.json();
-      throw new Error(errorReset.message);
+      return Promise.reject(new Error(`Server responded with status ${response.status}`));
     } catch (e: any) {
       return Promise.reject(e);
     }
