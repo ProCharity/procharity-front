@@ -46,8 +46,7 @@ const history = useHistory()
         history.push('/dashboard');
         return Promise.resolve();
       }
-      const error = await response.json();
-      throw new Error(error.message);
+      return Promise.reject(new Error(`Server responded with status ${response.status}`));
     } catch (e: any) {
       return Promise.reject(e);
     }

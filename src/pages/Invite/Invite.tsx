@@ -100,8 +100,7 @@ const { setRefreshToken, setUserToken, refreshToken, userToken } = useContext(Au
 
         return result;
       }
-      const errorResponse = await response.json();
-      throw new Error(errorResponse.message);
+      return Promise.reject(new Error(`Server responded with status ${response.status}`));
     } catch (e: any) {
       return Promise.reject(e);
     }

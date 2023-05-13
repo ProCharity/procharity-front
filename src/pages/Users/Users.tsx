@@ -88,9 +88,7 @@ const Users: React.FC<IUsersProps> = ({ isMenuOpen }) => {
         const userData = (await response.json()) as IUsersTableData;
         return userData;
       }
-      const error = await response.json();
-
-      throw new Error(error);
+      return Promise.reject(new Error(`Server responded with status ${response.status}`));
     } catch (e: any) {
       return Promise.reject(e.message);
     }
