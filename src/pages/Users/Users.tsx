@@ -34,6 +34,7 @@ const Users: React.FC<IUsersProps> = ({ isMenuOpen }) => {
   const getUsersData = async (page: number, limit: number) => {
     try {
       const response = await ky(`${apiUrl}/users/?page=${page}&limit=${limit}`, {
+        redirect: 'follow',
         retry: {
           limit: 2,
           methods: ['get'],
@@ -56,6 +57,7 @@ const Users: React.FC<IUsersProps> = ({ isMenuOpen }) => {
             async (request, options, res) => {
               if (res.status === 401) {
                 const resp = await ky.post(`${apiUrl}/auth/token_refresh/`, {
+                  redirect: 'follow',
                   headers: {
                     Authorization: `Bearer ${refreshToken}`,
                   },

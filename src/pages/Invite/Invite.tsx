@@ -41,7 +41,8 @@ const history = useHistory();
 const { setRefreshToken, setUserToken, refreshToken, userToken } = useContext(AuthContext);
   const onInvite = async (dataInvite: InviteFormValues) => {
     try {
-      const response = await ky.post(`${apiUrl}/auth/invitation/`, {
+      const response = await ky.post(`${apiUrl}/auth/invitation`, {
+        redirect: 'follow',
         retry: {
           limit: 2,
           methods: ['get'],
@@ -63,10 +64,11 @@ const { setRefreshToken, setUserToken, refreshToken, userToken } = useContext(Au
             // eslint-disable-next-line consistent-return
             async (request, options, res) => {
               if (res.status === 401) {
-                const resp = await ky.post(`${apiUrl}/auth/token_refresh/`, {
+                const resp = await ky.post(`${apiUrl}/auth/token_refresh`, {
                   headers: {
                     Authorization: `Bearer ${refreshToken}`,
                   },
+                  redirect: 'follow',
                 });
 
                 if (resp.status === 200) {

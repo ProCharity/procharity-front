@@ -51,7 +51,7 @@ const Header: React.FC<IHeaderProps> = ({
 
   const getHealthCheck = async () => {
     try {
-      const response = await ky(`${apiUrl}/health_check/`, {
+      const response = await ky(`${apiUrl}/health_check`, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -61,6 +61,7 @@ const Header: React.FC<IHeaderProps> = ({
           methods: ['get'],
           statusCodes: [401],
         },
+        redirect: 'follow',
       });
 
       if (response.status === 200) {

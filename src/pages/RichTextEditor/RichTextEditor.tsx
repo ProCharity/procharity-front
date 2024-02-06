@@ -82,7 +82,8 @@ const RichTextEditor: React.FC<IRichTextEditorInterface> = ({ isMenuOpen }) => {
     const replaceEnclosedTag = stripTags.replace(/(<br[^>]+?>|<br>|<\/p>)/gim, '\n');
     const normalizedData = { message: replaceEnclosedTag };
     try {
-      const response = await ky.post(`${apiUrl}/send_telegram_notification/`, {
+      const response = await ky.post(`${apiUrl}/send_telegram_notification`, {
+        redirect: 'follow',
         json: {
           has_mailing: data.has_mailing,
           ...normalizedData,
@@ -101,7 +102,8 @@ const RichTextEditor: React.FC<IRichTextEditorInterface> = ({ isMenuOpen }) => {
             // eslint-disable-next-line consistent-return
             async (request, options, res) => {
               if (res.status === 401) {
-                const resp = await ky.post(`${apiUrl}/auth/token_refresh/`, {
+                const resp = await ky.post(`${apiUrl}/auth/token_refresh`, {
+                  redirect: 'follow',
                   headers: {
                     Authorization: `Bearer ${refreshToken}`,
                   },
