@@ -127,7 +127,8 @@ const Dashboard: React.FC<IDashboardProps> = ({  isMenuOpen }) => {
       try {
         const dateLimit = usersDate ? `?date_limit=${usersDate}` : '';
 
-        const response = await ky(`${apiUrl}/analytics/${dateLimit}`, {
+        const response = await ky(`${apiUrl}/analytics${dateLimit}`, {
+          redirect: 'follow',
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${userToken}`,
@@ -154,7 +155,8 @@ const Dashboard: React.FC<IDashboardProps> = ({  isMenuOpen }) => {
               // eslint-disable-next-line consistent-return
               async (request, options, res) => {
                 if (res.status === 401 || res.status === 422) {
-                  const resp = await ky.post(`${apiUrl}/auth/token_refresh/`, {
+                  const resp = await ky.post(`${apiUrl}/auth/token_refresh`, {
+                    redirect: 'follow',
                     headers: {
                       Authorization: `Bearer ${refreshToken}`,
                     },

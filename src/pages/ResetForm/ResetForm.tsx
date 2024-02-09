@@ -36,7 +36,8 @@ const ResetForm: React.FC = () => {
   const password = useRef({});
   const onReset = async (data: IResetFormValues, params: { id: string }) => {
     try {
-      const response = await ky.post(`${apiUrl}/auth/password_reset_confirm/`, {
+      const response = await ky.post(`${apiUrl}/auth/password_reset_confirm`, {
+        redirect: 'follow',
         json: {
           ...data,
           token: params.id,
@@ -62,7 +63,8 @@ const ResetForm: React.FC = () => {
     const handleTokenValidity = async () => {
       try {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const response = await ky.post(`${apiUrl}/auth/token_checker/`, {
+        const response = await ky.post(`${apiUrl}/auth/token_checker`, {
+          redirect: 'follow',
           json: {
             token: params.id,
           },

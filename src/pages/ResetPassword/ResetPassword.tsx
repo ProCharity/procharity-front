@@ -31,7 +31,8 @@ const ResetPassword: React.FC<IResetPasswordProps> = () => {
 
   const onResetPassword = async (dataReset: IResetPasswordFormValues) => {
     try {
-      const response = await ky.post(`${apiUrl}/auth/password_reset/`, {
+      const response = await ky.post(`${apiUrl}/auth/password_reset`, {
+        redirect: 'follow',
         json: {
           ...dataReset,
         },

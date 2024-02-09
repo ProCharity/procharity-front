@@ -45,7 +45,7 @@ const RegisterForm: React.FC = () => {
     try {
       const dataForRegistration = data;
       delete dataForRegistration?.passwordConfirmation;
-      const response = await ky.post(`${apiUrl}/auth/register/`, {
+      const response = await ky.post(`${apiUrl}/auth/register`, {
         json: {
           ...data,
           token: params.id,
@@ -72,7 +72,8 @@ const RegisterForm: React.FC = () => {
     const handleTokenValidity = async () => {
       try {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const response = await ky.post(`${apiUrl}/auth/token_checker/`, {
+        const response = await ky.post(`${apiUrl}/auth/token_checker`, {
+          redirect: 'follow',
           json: {
             token: params.id,
           },

@@ -32,11 +32,12 @@ const history = useHistory()
   } = useForm<Pick<ILoginFormValues, 'email' | 'password'>>({ resolver: yupResolver(schema), mode: 'onTouched' });
   const onLogin = async (data: ILoginFormValues) => {
     try {
-      const response = await ky.post(`${apiUrl}/auth/login/`, {
+      const response = await ky.post(`${apiUrl}/auth/login`, {
         json: {
           ...data,
         },
         throwHttpErrors: false,
+        redirect: 'follow',
       });
 
       if (response.status === 200) {
