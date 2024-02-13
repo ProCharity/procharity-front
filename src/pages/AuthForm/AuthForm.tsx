@@ -33,19 +33,24 @@ const history = useHistory()
   const onLogin = async (data: ILoginFormValues) => {
     try {
       const response = await ky.post(`${apiUrl}/auth/login`, {
-        json: {
-          ...data,
-        },
+        body: new URLSearchParams({username: data.email, password: data.password}),
         throwHttpErrors: false,
         redirect: 'follow',
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
       });
+      const response_data = await response.json();
 
       if (response.status === 200) {
-        const token: { access_token: string; refresh_token: string } = await response.json();
+        const token: { access_token: string; refresh_token: string } = response_data;
         setUserToken(token.access_token);
         setRefreshToken(token.refresh_token);
         history.push('/dashboard');
         return Promise.resolve();
+      }
+      if (response.status === 400 && response_data.detail == "LOGIN_BAD_CREDENTIALS") {
+        return Promise.reject(new Error("Пользователь не найден, либо был введен не верный пароль."));
       }
       return Promise.reject(new Error(`Server responded with status ${response.status}`));
     } catch (e: any) {

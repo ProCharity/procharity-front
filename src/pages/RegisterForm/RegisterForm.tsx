@@ -57,8 +57,8 @@ const RegisterForm: React.FC = () => {
         history.push('/');
         return Promise.resolve();
       }
-      const error = await response.json();
-      throw new Error(error.message);
+      const error = await response.json() as {detail: string};
+      throw new Error(error.detail);
     } catch (e: any) {
       return Promise.reject(e);
     }
@@ -81,12 +81,12 @@ const RegisterForm: React.FC = () => {
         });
 
         if (response.status !== 200) {
-          const error = (await response.json()) as { message: string };
-          throw new Error(error.message);
+          const error = (await response.json()) as { detail: string };
+          throw new Error(error.detail);
         }
       } catch (e) {
-        const error = e as { message: string };
-        setInviteValid(error.message);
+        const error = e as { detail: string };
+        setInviteValid(error.detail);
       }
     };
     handleTokenValidity();
