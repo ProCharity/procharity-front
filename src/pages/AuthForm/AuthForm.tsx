@@ -33,7 +33,7 @@ const history = useHistory()
   const onLogin = async (data: ILoginFormValues) => {
     try {
       const response = await ky.post(`${apiUrl}/auth/login`, {
-        body: new URLSearchParams({username: data.email, password: data.password}),
+        body: new URLSearchParams({...data}),
         throwHttpErrors: false,
         redirect: 'follow',
         headers: {
